@@ -6,9 +6,9 @@
 
 ## 技术栈
 
-vue + vue-router + vue-resource(后期替换为axios)
+vue + vue-router + axios
 
-## Build Setup
+## 编译步骤
 
 ``` bash
 # install dependencies
