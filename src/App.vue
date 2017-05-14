@@ -32,10 +32,7 @@
         response = response.data
         if (response.errno === ERR_OK) {
           this.seller = response.data
-          console.log(this.seller)
         }
-      }).catch(function (error) {
-        console.log(error)
       })
     },
     components: {
