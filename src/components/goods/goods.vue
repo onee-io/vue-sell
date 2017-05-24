@@ -29,7 +29,7 @@
                   <span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">{{food.oldPrice}}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <oe-cartcontrol :food="food"></oe-cartcontrol>
+                  <oe-cartcontrol @add="addFood" :food="food"></oe-cartcontrol>
                 </div>
               </div>
             </li>
@@ -37,7 +37,7 @@
         </li>
       </ul>
     </div>
-    <oe-shopcart :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></oe-shopcart>
+    <oe-shopcart ref="shopcart" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></oe-shopcart>
   </div>
 </template>
 
@@ -119,6 +119,15 @@
           height += item.clientHeight
           this.listHeight.push(height)
         }
+      },
+      addFood (target) {
+        this._drop(target)
+      },
+      _drop (target) {
+        // 体验优化,异步执行下落动画
+        this.$nextTick(() => {
+          this.$refs.shopcart.drop(target)
+        })
       }
     },
     components: {

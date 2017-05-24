@@ -29,6 +29,7 @@
         } else {
           this.food.count++
         }
+        this.$emit('add', event.target)
       },
       removeCart (event) {
         if (!event._constructed) {
@@ -64,7 +65,7 @@
         transform translate3d(24px, 0, 0)
         .inner
           transform rotate(180deg)
-  .count
+    .count
       display inline-block
       vertical-align top
       width 12px
