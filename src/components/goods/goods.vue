@@ -3,7 +3,7 @@
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
         <li v-for="(item, index) in goods" class="menu-item" :class="{'current': currentIndex === index}"
-          @click="selectMenu(index, $event)">
+            @click="selectMenu(index, $event)">
           <span class="text border-1px">
             <span v-if="item.type > 0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
@@ -37,7 +37,7 @@
         </li>
       </ul>
     </div>
-    <oe-shopcart ref="shopcart" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></oe-shopcart>
+    <oe-shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></oe-shopcart>
   </div>
 </template>
 
@@ -58,6 +58,7 @@
       return {
         goods: [],
         listHeight: [],
+        selectedFood: {},
         scrollY: 0
       }
     },
@@ -85,6 +86,17 @@
           }
         }
         return 0
+      },
+      selectFoods () {
+        let foods = []
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food)
+            }
+          })
+        })
+        return foods
       }
     },
     methods: {
