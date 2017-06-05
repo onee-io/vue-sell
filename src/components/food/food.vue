@@ -114,6 +114,8 @@
           padding 10px
           font-size 20px
           color #fff
+          background rgba(0, 0, 0, 0.2)
+          border-radius 50%
     .content
       position relative
       padding 18px
