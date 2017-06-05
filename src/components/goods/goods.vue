@@ -1,50 +1,55 @@
 <template>
-  <div class="goods">
-    <div class="menu-wrapper" ref="menuWrapper">
-      <ul>
-        <li v-for="(item, index) in goods" class="menu-item" :class="{'current': currentIndex === index}"
-            @click="selectMenu(index, $event)">
+  <div>
+    <div class="goods">
+      <div class="menu-wrapper" ref="menuWrapper">
+        <ul>
+          <li v-for="(item, index) in goods" class="menu-item" :class="{'current': currentIndex === index}"
+              @click="selectMenu(index, $event)">
           <span class="text border-1px">
             <span v-if="item.type > 0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="foods-wrapper" ref="foodsWrapper">
+        <ul>
+          <li v-for="item in goods" class="food-list food-list-hook">
+            <h1 class="title">{{item.name}}</h1>
+            <ul>
+              <li v-for="food in item.foods" class="food-item border-1px" @click="selectFood(food,$event)">
+                <div class="icon">
+                  <img width="57" height="57" :src="food.icon">
+                </div>
+                <div class="content">
+                  <h2 class="name">{{food.name}}</h2>
+                  <p class="desc">{{food.description}}</p>
+                  <div class="extra">
+                    <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
+                  </div>
+                  <div class="price">
+                    <span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">{{food.oldPrice}}</span>
+                  </div>
+                  <div class="cartcontrol-wrapper">
+                    <oe-cartcontrol @add="addFood" :food="food"></oe-cartcontrol>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <oe-shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></oe-shopcart>
     </div>
-    <div class="foods-wrapper" ref="foodsWrapper">
-      <ul>
-        <li v-for="item in goods" class="food-list food-list-hook">
-          <h1 class="title">{{item.name}}</h1>
-          <ul>
-            <li v-for="food in item.foods" class="food-item border-1px">
-              <div class="icon">
-                <img width="57" height="57" :src="food.icon">
-              </div>
-              <div class="content">
-                <h2 class="name">{{food.name}}</h2>
-                <p class="desc">{{food.description}}</p>
-                <div class="extra">
-                  <span class="count">月售{{food.sellCount}}份</span><span>好评率{{food.rating}}%</span>
-                </div>
-                <div class="price">
-                  <span class="now">¥{{food.price}}</span><span class="old" v-show="food.oldPrice">{{food.oldPrice}}</span>
-                </div>
-                <div class="cartcontrol-wrapper">
-                  <oe-cartcontrol @add="addFood" :food="food"></oe-cartcontrol>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-    <oe-shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice" :minPrice="seller.minPrice"></oe-shopcart>
+    <oe-food @add="addFood" :food="selectedFood" ref="food"></oe-food>
   </div>
+
 </template>
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
   import shopcart from '@/components/shopcart/shopcart'
   import cartcontrol from '@/components/cartcontrol/cartcontrol'
+  import food from '@/components/food/food'
 
   const ERR_OK = 0
 
@@ -108,6 +113,13 @@
         let el = foodList[index]
         this.foodsScroll.scrollToElement(el, 300)
       },
+      selectFood (food, event) {
+        if (!event._constructed) {
+          return
+        }
+        this.selectedFood = food
+        this.$refs.food.show()
+      },
       _initScroll () {
         this.menuScroll = new BScroll(this.$refs.menuWrapper, {
           click: true
@@ -144,7 +156,8 @@
     },
     components: {
       'oe-shopcart': shopcart,
-      'oe-cartcontrol': cartcontrol
+      'oe-cartcontrol': cartcontrol,
+      'oe-food': food
     }
   }
 </script>
