@@ -1,7 +1,7 @@
 <template>
   <div class="cartcontrol">
     <transition name="move">
-      <div class="remove" v-show="food.count>0" @click.stop.prevent="removeCart">
+      <div class="remove" v-show="food.count>0" @click="removeCart">
         <span class="inner icon-remove_circle_outline"></span>
       </div>
     </transition>
