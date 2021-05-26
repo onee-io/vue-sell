@@ -1,8 +1,10 @@
 # Vue-Sell
 
-> 使用Vue高仿饿了么商家页面，实现过程参考教程
+> 使用 Vue 高仿饿了么商家页面，实现过程参考教程
 [http://coding.imooc.com/learn/list/74.html](http://coding.imooc.com/learn/list/74.html)，
 感谢 [@ustbhuangyi](https://github.com/ustbhuangyi) 老师的讲解
+
+演示地址：[https://vue-sell.onee.io](https://vue-sell.onee.io)
 
 ## 技术栈
 
