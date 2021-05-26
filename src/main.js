@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import '@/common/stylus/index.styl'
 
+axios.defaults.baseURL = 'https://sideline.onee.top/mock/vue-sell/'
 Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
